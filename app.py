@@ -93,7 +93,7 @@ canvas_result = st_canvas(
 # Generate a caption for the given image
 # reference: ChatGPT https://chatgpt.com/share/678fc3f3-b94c-800b-b114-407634477991
 # ---------------------------------------------------------------------------------
-@st.cache_resource(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def generate_caption(image):
     resized_image = image.resize((384, 384))  # Resize for efficiency
     # Make captions from the picture drawn
@@ -113,7 +113,7 @@ def generate_caption(image):
 # Search for Results
 # reference: https://github.com/TharinduMadhusanka/semantic-movie-search/blob/main/app.py
 # ---------------------------------------------------------------------------------
-@st.cache_resource(show_spinner=False)
+@st.cache_data(show_spinner=False)
 def search_movie(query, n_movies, min_year):
     return collection.query(query_texts=[query], n_results=n_movies, where={"release_year": {"$gte": min_year}})
 
@@ -160,6 +160,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
