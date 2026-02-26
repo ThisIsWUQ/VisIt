@@ -1,6 +1,6 @@
 chromadb
 pysqlite3-binary
 streamlit_drawable_canvas
-transformers
+transformers>=4.36.0
 sentence_transformers
 torch
