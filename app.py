@@ -16,16 +16,12 @@ from TMDB import api_response
 from YTS_url import get_movie_page_url
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
-from transformers import VisionEncoderDecoderModel, ViTImageProcessor, AutoTokenizer
-#from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import BlipProcessor, BlipForConditionalGeneration
 #from transformers import pipeline
 
 # Initialize an image-to-text model
-#processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
-#model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
-model = VisionEncoderDecoderModel.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
-processor = ViTImageProcessor.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
-tokenizer = AutoTokenizer.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 model.eval()
 
 # Initialize ChromaDB client and collection
@@ -107,23 +103,10 @@ def generate_caption(image):
     # ---------------------------------------------------------------------------------
     #return captioner(resized_image)[0]['generated_text']
     
-    #inputs = processor(images=resized_image, return_tensors="pt")
-    #out = model.generate(**inputs)
+    inputs = processor(images=resized_image, return_tensors="pt")
+    out = model.generate(**inputs)
     
-    #caption = processor.decode(out[0], skip_special_tokens=True)
-    #return caption
-
-    image = resized_image.convert("RGB")
-    pixel_values = processor(images=image, return_tensors="pt").pixel_values
-
-    with torch.no_grad():
-        output_ids = model.generate(
-            pixel_values,
-            max_length=40,
-            num_beams=4
-        )
-
-    caption = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+    caption = processor.decode(out[0], skip_special_tokens=True)
     return caption
 # ---------------------------------------------------------------------------------
 
@@ -177,6 +160,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
