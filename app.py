@@ -72,7 +72,7 @@ stroke_color = st.sidebar.color_picker("Stroke color hex: ")
 st.sidebar.write("Note: After choosing the stroke's color, close the colorpicker widget by clicking anywhere on the screen")
 bg_image = st.sidebar.file_uploader("Background image:", type=["png", "jpg"])
 
-#realtime_update = st.sidebar.checkbox("Update in realtime", True)
+realtime_update = st.sidebar.checkbox("Update in realtime", True)
 
 # Create a canvas component
 canvas_result = st_canvas(
@@ -159,6 +159,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
