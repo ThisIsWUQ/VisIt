@@ -1,5 +1,5 @@
 chromadb
 pysqlite3-binary
 streamlit_drawable_canvas
-transformers>=5.2.0
+transformers
 sentence_transformers
