@@ -98,7 +98,7 @@ def generate_caption(image):
     # Make captions from the picture drawn
     # reference: https://huggingface.co/tasks/image-to-text
     # ---------------------------------------------------------------------------------
-    captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    #captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     # ---------------------------------------------------------------------------------
     return captioner(resized_image)[0]['generated_text']
     
@@ -159,6 +159,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
