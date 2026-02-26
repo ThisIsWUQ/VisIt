@@ -99,7 +99,7 @@ canvas_result = st_canvas(
 # ---------------------------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def generate_caption(image):
-    resized_image = image.resize((256, 256))  # Resize for efficiency
+    resized_image = image.resize((384, 384))  # Resize for efficiency
     # Make captions from the picture drawn
     # reference: https://huggingface.co/tasks/image-to-text
     # ---------------------------------------------------------------------------------
@@ -113,8 +113,8 @@ def generate_caption(image):
     #caption = processor.decode(out[0], skip_special_tokens=True)
     #return caption
 
-    image = image.convert("RGB")
-    pixel_values = processor(images=image, return_tensors="pt").pixel_values
+    #image = image.convert("RGB")
+    pixel_values = processor(images=resized_image, return_tensors="pt").pixel_values
 
     with torch.no_grad():
         output_ids = model.generate(
@@ -177,6 +177,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
