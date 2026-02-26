@@ -101,7 +101,7 @@ def generate_caption(image):
     #captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     # ---------------------------------------------------------------------------------
     #return captioner(resized_image)[0]['generated_text']
-    inputs = processor(images=image, return_tensors="pt")
+    inputs = processor(images=resized_image, return_tensors="pt")
     out = model.generate(**inputs)
     caption = processor.decode(out[0], skip_special_tokens=True)
     return caption
@@ -157,4 +157,5 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
