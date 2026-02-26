@@ -16,12 +16,12 @@ from TMDB import api_response
 from YTS_url import get_movie_page_url
 from PIL import Image
 from streamlit_drawable_canvas import st_canvas
-from transformers import BlipProcessor, BlipForConditionalGeneration
-#from transformers import pipeline
+#from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import pipeline
 
 # Initialize an image-to-text model
-processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-large")
-model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-large")
+processor = BlipProcessor.from_pretrained("Salesforce/blip-image-captioning-base")
+model = BlipForConditionalGeneration.from_pretrained("Salesforce/blip-image-captioning-base")
 
 # Initialize ChromaDB client and collection
 # reference: https://github.com/TharinduMadhusanka/semantic-movie-search/blob/main/app.py
@@ -98,15 +98,15 @@ def generate_caption(image):
     # Make captions from the picture drawn
     # reference: https://huggingface.co/tasks/image-to-text
     # ---------------------------------------------------------------------------------
-    #captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
+    captioner = pipeline("image-to-text", model="Salesforce/blip-image-captioning-base")
     # ---------------------------------------------------------------------------------
-    #return captioner(resized_image)[0]['generated_text']
+    return captioner(resized_image)[0]['generated_text']
     
-    inputs = processor(images=resized_image, return_tensors="pt")
-    out = model.generate(**inputs, max_new_tokens=50)
+    #inputs = processor(images=resized_image, return_tensors="pt")
+    #out = model.generate(**inputs, max_new_tokens=50)
     
-    caption = processor.decode(out[0], skip_special_tokens=True)
-    return caption
+    #caption = processor.decode(out[0], skip_special_tokens=True)
+    #return caption
 # ---------------------------------------------------------------------------------
 
 # Search for Results
@@ -159,6 +159,7 @@ if st.button("Search"):
     st.write("How is your impression with the app? If you have 5 minutes, please take this survey below")
     st.write("Also, do not close this app yet! You can close it after taking the survey.")
     st.link_button("Click here to go to the survey", "https://forms.gle/Cbya8epun8ngyeX4A")
+
 
 
 
